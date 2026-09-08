@@ -6,9 +6,9 @@ declined charge is retried on the documented schedule, a permanently failed char
 order to `payment_failed`, and no charge is ever attempted twice for the same attempt id.
 
 ## Completed
-- `src/billing/retry.ts` — retry scheduler, backoff table, and the idempotency key derivation.
-- `src/billing/webhooks.ts` — `charge.failed` now enqueues a retry instead of finalising the order.
-- Migration `0042_add_charge_attempts.sql` — new `charge_attempts` table, applied on the dev
+- `src/billing/retry.ts`: retry scheduler, backoff table, and the idempotency key derivation.
+- `src/billing/webhooks.ts`: `charge.failed` now enqueues a retry instead of finalising the order.
+- Migration `0042_add_charge_attempts.sql`: new `charge_attempts` table, applied on the dev
   database only.
 
 Implemented, not yet verified: the scheduler has never run against the sandbox gateway.
@@ -22,17 +22,17 @@ Implemented, not yet verified: the scheduler has never run against the sandbox g
   asking them.
 
 ## Relevant / Changed Files
-- `src/billing/retry.ts` — `scheduleRetry()`, `nextDelayMs()`. The whole feature is here.
-- `src/billing/webhooks.ts` — `handleChargeFailed()`. The only caller.
-- `migrations/0042_add_charge_attempts.sql` — not applied to staging or production.
-- `src/billing/gateway.ts` — untouched, but `charge()` is the function the retry calls; read it
+- `src/billing/retry.ts`: `scheduleRetry()`, `nextDelayMs()`. The whole feature is here.
+- `src/billing/webhooks.ts`: `handleChargeFailed()`. The only caller.
+- `migrations/0042_add_charge_attempts.sql`: not applied to staging or production.
+- `src/billing/gateway.ts`: untouched, but `charge()` is the function the retry calls; read it
   before changing the key derivation.
 
 ## Remaining Work
 1. Run the scheduler against the sandbox gateway and confirm a declined card produces exactly
    four attempts.
 2. Apply migration 0042 to staging.
-3. Add the `payment_failed` transition to the order state machine — currently the order stays
+3. Add the `payment_failed` transition to the order state machine. Currently the order stays
    `pending` forever after the last attempt.
 4. Alert on the retry queue depth.
 
