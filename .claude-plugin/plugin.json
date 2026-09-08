@@ -1,0 +1,9 @@
+{
+  "name": "session-handoff",
+  "description": "Decide between continuing, compacting, clearing and handing off, then write a handoff the next session finds by itself.",
+  "version": "1.0.0",
+  "author": { "name": "Farhan" },
+  "homepage": "https://github.com/farhan1188/claude-code-session-handoff",
+  "license": "MIT",
+  "keywords": ["context", "handoff", "compaction", "session", "continuity"]
+}

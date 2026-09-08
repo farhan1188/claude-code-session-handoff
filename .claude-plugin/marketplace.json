@@ -1,0 +1,17 @@
+{
+  "name": "session-handoff",
+  "owner": { "name": "Farhan" },
+  "metadata": {
+    "description": "Context health and clean-session continuity for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "session-handoff",
+      "source": "./",
+      "description": "Decide between continuing, compacting, clearing and handing off, then write a handoff the next session finds by itself.",
+      "strict": false,
+      "skills": ["./skills/session-handoff"]
+    }
+  ]
+}
