@@ -161,7 +161,12 @@ The single best starting action for the fresh session.
 ### The start prompt
 
 The handoff is not delivered until a ready-to-paste start prompt has been printed in the chat, as the
-last thing this skill outputs. Write it in second person: re-ground on the registered handoff and the
+last thing this skill outputs.
+
+**The user pastes it, so write it AS the user.** The assistant is "you", the user is "I", and the
+user is never referred to in the third person. A prompt that says "that is where he stopped" or
+"until she says so" is one the user has to rewrite before they can send it, and it reads as though
+the handoff was written for somebody else. Content: re-ground on the registered handoff and the
 registered check, verify the handoff's claims against the repository, then take the first unfinished
 step.
 
