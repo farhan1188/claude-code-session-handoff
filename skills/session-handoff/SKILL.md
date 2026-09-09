@@ -179,21 +179,35 @@ What survives this check is usually two sentences. The check earns its keep in t
 too: it is how you find the rule that is genuinely missing, and the fix for that one is the
 repository, not the prompt.
 
-## 3b. Nothing the user decided may live only in the conversation
+## 3b. Nothing decided, and nothing found, may live only in the conversation
 
 Run this before declaring the handoff ready. It is a separate pass with its own output, not the
 re-read in the next section.
 
-1. **List every decision the user made this session, in their own words.** A number they set, a rule
+**Build three lists, not one.** Scoping this to the user's decisions is the failure mode: a session
+that ran the check, passed it, and was then asked whether everything was recorded found three more
+gaps, none of which was a decision of theirs.
+
+1. **Every decision the user made this session, in their own words.** A number they set, a rule
    they changed, a thing they tabled, a thing they said stays, a yes or no to a proposal. Scan the
    whole conversation, including mid-turn messages and one-word answers.
-2. **For each one, name the file that carries it and grep to prove it is there.** The file must be
-   one the next session loads or reads on its own: the state file, a decision register, a settings
-   file, the project `CLAUDE.md`, a memory file. A rule that lives in a gitignored file, or in a file
-   that loads only when something invokes it, counts only if a loading file points at it.
-3. **Anything found only in the conversation gets written now, into the file that owns it**, and the
-   grep is run again. The handoff is not ready until every decision greps positive.
-4. **Put the table in the chat**: decision, file, found or written-just-now.
+2. **Every defect, gap or open question the session itself found**, whether or not the user reacted
+   to it. A thing you discovered and described well in chat is not recorded because you described it
+   well. This list is usually longer than the first, and it is the one that gets skipped.
+3. **Every number you put in front of the user that later changed.** A figure corrected in
+   conversation but left standing in a register is worse than one never written: the file now
+   asserts something the user has already been told is wrong, and the next session will believe the
+   file rather than the chat. Grep the old number as well as the new one.
+
+Then, for every item on all three lists:
+
+4. **Name the file that carries it and grep to prove it is there.** The file must be one the next
+   session loads or reads on its own: the state file, a decision register, a settings file, the
+   project `CLAUDE.md`, a memory file. A rule that lives in a gitignored file, or in a file that
+   loads only when something invokes it, counts only if a loading file points at it.
+5. **Anything found only in the conversation gets written now, into the file that owns it**, and the
+   grep is run again. The handoff is not ready until every item greps positive.
+6. **Put the table in the chat**: item, file, found or written-just-now.
 
 The user reads that table. They do not read a claim that everything was recorded. A session that
 judges its own handoff will pass itself; the grep will not.
